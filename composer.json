@@ -1,0 +1,11 @@
+{
+    "name": "arturdoruch/js",
+    "description": "Useful JavaScript tools and utilities",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Artur Doruch",
+            "email": "arturdoruch@interia.pl"
+        }
+    ]
+}
