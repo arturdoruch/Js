@@ -14,9 +14,9 @@
      * Pre loads images
      *
      * @param {[]} images The collection of images urls or paths.
-     * @param {{}}     [options]
-     * @param {string} [options.message = 'Loading images'] Pre loader message.
-     * @param {bool}   [options.hideOnLoaded = false] Hide pre loader after images are loaded.
+     * @param {{}}      [options]
+     * @param {string}  [options.message = 'Loading images'] Pre loader message.
+     * @param {boolean} [options.hideOnLoaded = false] Hide pre loader after images are loaded.
      *
      * @returns {{done: Function}}
      */
@@ -35,7 +35,7 @@
             progressBar.update(loaded, imagesLength);
 
             if (loaded == imagesLength) {
-                if (_options.hideOnDone === true) {
+                if (_options.hideOnLoaded === true) {
                     hidePreLoader();
                 }
                 done(loadedImages);
@@ -81,16 +81,16 @@
     }
 
     /**
-     * @param {{}}     options
-     * @param {string} [options.message = 'Loading images'] Pre loader message.
-     * @param {bool}   [options.hideOnLoaded = false] Hide pre loader after images are loaded.
+     * @param {{}}      options
+     * @param {string}  [options.message = 'Loading images'] Pre loader message.
+     * @param {boolean} [options.hideOnLoaded = false] Hide pre loader after images are loaded.
      */
     function setOptions(options) {
         $.extend(_options, options);
     }
 
     var template = {
-        cssPrefix: 'adipl',
+        cssPrefix: 'ardo-image-preloader',
         $template: null,
         $overlay: null,
         $message: null,
@@ -167,7 +167,7 @@
         }
     };
 
-    var object = {
+    var _public = {
         loadImages: loadImages,
         setOptions: setOptions,
         hide: hidePreLoader,
@@ -176,15 +176,15 @@
 
     if (typeof define === 'function' && define.amd) {
         define(function() {
-            return object;
+            return _public;
         });
     } else if (typeof module != 'undefined' && module.exports) {
-        module.exports = object;
+        module.exports = _public;
     } else {
         if (!window.ArturDoruchTools) {
             window.ArturDoruchTools = {};
         }
-        window.ArturDoruchTools.imagePreLoader = object;
+        window.ArturDoruchTools.imagePreLoader = _public;
     }
 
 })(window, $);

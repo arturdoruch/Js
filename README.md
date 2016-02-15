@@ -1,3 +1,3 @@
 # JS
 
-Useful JavaScript tools and utilities.
+Collection of useful JavaScript utilities, helpers, tools and components.

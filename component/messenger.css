@@ -1,0 +1,61 @@
+
+/* Message */
+.ardo-message__container {
+    width: 600px;
+    z-index: 9999;
+    transition: top 2s,
+                bottom 2s,
+                left 2s,
+                right 2s;
+}
+
+.ardo-message__container .message-item {
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.34);
+    font-size: 14px;
+    padding: 10px 15px;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.19);
+    background-color: #d2c369;
+}
+
+.ardo-message__container .message-item.success {
+    background-color: #A4EBA3;
+}
+
+.ardo-message__container .message-item.error {
+    background-color: #e68e8e;
+}
+
+.ardo-message__container .message-item.notice {
+    background-color: #d2c369;
+}
+
+@media all and (max-width: 600px) {
+    .ardo-message__container {
+        width: 100%;
+    }
+}
+
+/* Message popup */
+.ardo-message__container.popup {
+    min-width: 300px;
+    text-align: center;
+}
+
+.ardo-message__container.popup .message-item {
+    box-shadow: 0 3px 5px rgba(0, 0, 0, 0.34);
+    color: rgba(255, 255, 255, 0.9);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.18);
+    background-color: #b79e03;
+}
+
+.ardo-message__container.popup .message-item.notice {
+    background-color: #b79e03;
+}
+
+.ardo-message__container.popup .message-item.error {
+    background-color: #BA3631;
+}
+
+.ardo-message__container.popup .message-item.success {
+    background-color: #41ae22;
+}
