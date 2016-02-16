@@ -1,10 +1,10 @@
 
-define(['./router/config', '../tool/TimeMeter'], function(config, TimeMeter) {
+define(['../helper/locationHelper'], function(locationHelper) {
 
     var _processNoticer;
 
     /**
-     * @param {object} options jQuery ajax request options
+     * @param {object|string} options jQuery ajax request options or request path
      * @param {string} [noticeMessage]
      * @param {bool}   [noticeShowLoader]
      */
@@ -14,6 +14,9 @@ define(['./router/config', '../tool/TimeMeter'], function(config, TimeMeter) {
             _processNoticer.display();
         }
 
+        if (typeof options === 'string') {
+            options = { url: options };
+        }
         options = prepareOptions(options);
 
         return $.ajax(options)
@@ -62,7 +65,7 @@ define(['./router/config', '../tool/TimeMeter'], function(config, TimeMeter) {
         };
 
         options = $.extend(_options, options);
-        options.url = prepareUrl(options.url);
+        options.url = locationHelper.buildUrl(options.url);
 
         if (options.data) {
             if (!options.type) {
@@ -81,18 +84,6 @@ define(['./router/config', '../tool/TimeMeter'], function(config, TimeMeter) {
         }
 
         return options;
-    }
-
-    /**
-     * @param {string} url
-     * @returns {string}
-     */
-    function prepareUrl(url) {
-        if (!url) {
-            throw new Error('The xhr request url is empty.');
-        }
-
-        return config.BASE_URL + url.replace(config.BASE_URL, '');
     }
 
     /**

@@ -4,8 +4,8 @@
 
 define([
     '../../eventManager',
-    '../../router/helper'
-], function(em, RouterHelper) {
+    '../../../helper/locationHelper'
+], function(em, locationHelper) {
 
     return function () {
         var sortingData = {},
@@ -34,7 +34,7 @@ define([
                 sortingData[data.orderField] = (orderDir == 'asc') ? 'desc' : 'asc';
                 lastSortField = data.orderField;
 
-                em.dispatch('table.updateTable', [queryParams, RouterHelper.getCurrentUrl()]);
+                em.dispatch('table.updateTable', [queryParams, locationHelper.getCurrentUrl()]);
             }
         }
 

@@ -4,9 +4,9 @@
 
 define([
     '../../eventManager',
-    '../../router/helper',
+    '../../../helper/locationHelper',
     '../../../helper/localStorage'
-], function(em, RouterHelper, localStorage) {
+], function(em, locationHelper, localStorage) {
 
     /**
      * @param {HTMLElement|jQuery} form           The filter form element
@@ -49,7 +49,8 @@ define([
                 name,
                 value,
                 queryParams = {},
-                params = {};
+                params = {},
+                url = locationHelper.getCurrentUrl().replace(/\/(\d+)$/, '');
 
             formData.map(function(i) {
                 name = i.name.replace(/[^\[]*\[(.+)\].*/, '$1');
@@ -63,7 +64,7 @@ define([
 
             localStorage.set(getParamsKey(), params);
 
-            em.dispatch('table.updateTable', [queryParams, RouterHelper.getCurrentUrl(true)]);
+            em.dispatch('table.updateTable', [queryParams, url]);
         }
 
         function reset() {
@@ -85,7 +86,7 @@ define([
         }
 
         function getParamsKey() {
-            return 'filterTable' + RouterHelper.getCurrentRoute(true);
+            return 'filterTable' + locationHelper.getCurrentPath(true);
         }
 
         /**

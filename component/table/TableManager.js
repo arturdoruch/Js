@@ -4,8 +4,9 @@
 
 define([
     '../eventManager',
-    '../ajax'
-], function(em, Ajax) {
+    '../ajax',
+    '../router'
+], function(em, Ajax, router) {
 
     var $table,
         _pagination,
@@ -69,7 +70,7 @@ define([
         getTableList(url)
             .success(function(html) {
                 if (pushState !== false) {
-                    historyManager.pushState(html, url);
+                    router.setLocation(url, html);
                 }
                 updateTable(html, url);
             });
