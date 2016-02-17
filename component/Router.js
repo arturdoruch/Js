@@ -46,7 +46,7 @@ define([
          * Adds route handlers
          *
          * @param {string}   pathRegexp
-         * @param {function} initHandler     The handler called only once, when router.init() method is called.
+         * @param {function} [initHandler]   The handler called only once, when router.init() method is called.
          * @param {function} [changeHandler] The handler called every time, when:
          *                                   user click on browser "prev", "next" buttons or one of methods:
          *                                   history.back, history.forward or history.go was called.
@@ -74,7 +74,7 @@ define([
          * @param {*}       [data]
          * @param {boolean} [setLocation = true] Adds history state
          */
-        update: function (path, data, setLocation) {
+        changeLocation: function (path, data, setLocation) {
             path = locationHelper.getPath(path);
 
             var route = findRoute(path);
@@ -113,7 +113,7 @@ define([
     // The "onpopstate" event is called when user click on browser "prev", "next" buttons
     // or one of methods: history.back, history.forward or history.go was called.
     window.onpopstate = function(e) {
-        router.update(window.location.href, e.state, false);
+        router.changeLocation(window.location.href, e.state, false);
     };
 
     return router;
