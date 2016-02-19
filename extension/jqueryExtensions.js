@@ -18,6 +18,9 @@
 //
 //})(jQuery);
 
+/**
+ * Adds onprogress event for browsers not supported this event.
+ */
 (function ($, window, undefined) {
     // Check if browser support onprogress event.
     var hasOnProgress = ("onprogress" in $.ajaxSettings.xhr());
@@ -27,9 +30,9 @@
     }
 
     // Patch ajax settings to call a progress callback
-    var currentXHR = $.ajaxSettings.xhr;
+    var currentXhr = $.ajaxSettings.xhr;
     $.ajaxSettings.xhr = function () {
-        var xhr = currentXHR();
+        var xhr = currentXhr();
         if (xhr instanceof window.XMLHttpRequest) {
             xhr.addEventListener('progress', this.progress, false);
         }
