@@ -1,0 +1,11 @@
+{
+    "name": "arturdoruch/js-extension",
+    "description": "Extensions for popular JavaScript libraries",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Artur Doruch",
+            "email": "arturdoruch@interia.pl"
+        }
+    ]
+}

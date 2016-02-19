@@ -1,0 +1,98 @@
+/*
+ * Thumbnails
+ */
+.pswp__scroll-wrap {
+    /*transition: .3s height;*/
+}
+
+.pswp.pswp--thumbs .pswp__scroll-wrap {
+    height: calc(100% - 125px);
+}
+
+.pswp__thumbs {
+    background: #222 none repeat scroll 0 0;
+    bottom: 0;
+    height: 0;
+    width: 100%;
+    position: absolute;
+    /*transition: .3s height;*/
+}
+
+.pswp.pswp--thumbs .pswp__thumbs {
+    height: 125px;
+}
+
+.pswp__thumbs-container {
+    overflow: hidden;
+    margin: 0 auto;
+}
+
+.pswp__thumbs-wrapper {
+    position: relative;
+    left: 0;
+    height: 85px;
+    /*transition: left 0.5s;*/
+}
+
+.pswp__thumbs-list {
+    float: left;
+    height: 85px;
+    margin: 0;
+    padding: 0;
+}
+
+.pswp__thumbs-list li {
+    width: 100px;
+    display: inline-block;
+    margin: 5px;
+    cursor: pointer;
+    transition: all 0.2s;
+    background: #797979;
+    overflow: hidden;
+    position: relative;
+}
+
+.pswp__thumbs-list li::before {
+    content: "";
+    height: 100%;
+    position: absolute;
+    width: 100%;
+}
+
+.pswp__thumbs-list li.active {
+    box-shadow: 0 0 0 3px #07b11c;
+}
+
+.pswp__thumbs-list li img {
+    display: block;
+    height: 75px;
+    margin: 0 auto;
+    width: auto;
+}
+
+.pswp__thumbs-list-nav {
+    margin: 0;
+    padding: 0;
+    text-align: center;
+}
+
+.pswp__thumbs-list-nav li {
+    border: 1px solid #fff;
+    cursor: pointer;
+    display: inline-block;
+    height: 18px;
+    list-style: outside none none;
+    margin: 8px;
+    opacity: 0.75;
+    width: 18px;
+    transition: 0.2s opacity ease;
+}
+
+.pswp__thumbs-list-nav li:hover {
+    opacity: 1;
+}
+
+.pswp__thumbs-list-nav li.active {
+    background: #fff;
+    box-shadow: 0 0 0 2px #000 inset;
+}

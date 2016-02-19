@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 width="228.75px" height="76.473px" viewBox="0 0 228.75 76.473" enable-background="new 0 0 228.75 76.473" xml:space="preserve">
+<polygon id="Play" fill="#FFFFFF" points="208.789,56.819 194.789,49.876 194.789,56.831 194.789,63.874 208.789,56.844 
+	208.789,56.834 208.785,56.831 208.789,56.83 "/>
+<rect id="Stop" x="157.779" y="49.998" fill="#FFFFFF" width="14.005" height="14"/>
+<g id="Thumbs">
+	<rect x="169.782" y="15" fill="#FFFFFF" width="4" height="2"/>
+	<rect x="169.782" y="27" fill="#FFFFFF" width="4" height="2"/>
+	<rect x="169.782" y="20.969" fill="#FFFFFF" width="4" height="2"/>
+	<rect x="155.782" y="15" fill="#FFFFFF" width="4" height="2"/>
+	<rect x="155.782" y="27" fill="#FFFFFF" width="4" height="2"/>
+	<rect x="155.782" y="20.969" fill="#FFFFFF" width="4" height="2"/>
+	<rect x="162.782" y="15" fill="#FFFFFF" width="4" height="2"/>
+	<rect x="162.782" y="27" fill="#FFFFFF" width="4" height="2"/>
+	<rect x="162.782" y="20.969" fill="#FFFFFF" width="4" height="2"/>
+</g>
+<g>
+	<path id="Shape" fill="#FFFFFF" d="M61.132,50.498v3.769c-6.307,0.84-9.184,5.75-10.002,9.731c2.22-2.83,5.564-5.098,10.002-5.098
+		v3.598l5.998-5.914L61.132,50.498z"/>
+	<path fill="#FFFFFF" d="M19.716,56.998l-5.656-5.656l1.414-1.414l5.656,5.656l5.656-5.656l1.414,1.414l-5.656,5.656l5.656,5.656
+		l-1.414,1.414l-5.656-5.656l-5.656,5.656l-1.414-1.414L19.716,56.998z"/>
+	<path fill="#FFFFFF" d="M97.916,62.029l-1.785-1.531l3-3.5h-10v-2h10l-3-3.5l1.785-1.467l5.215,5.967L97.916,62.029z"/>
+	<path fill="#FFFFFF" d="M127.346,62.029l1.785-1.531l-3-3.5h10v-2h-10l3-3.5l-1.785-1.467l-5.215,5.967L127.346,62.029z"/>
+	<g>
+		<path id="Shape_1_" fill="#FFFFFF" d="M12.13,29v-5h2v3h3v2H12.13z M12.13,15h5v2h-3v3h-2V15z M30.13,15v5h-2v-3h-3v-2H30.13z
+			 M30.13,29h-5v-2h3v-3h2V29z"/>
+	</g>
+	<g>
+		<path fill="#FFFFFF" d="M56.13,24v5h-2v-3h-3v-2H56.13z M56.13,20h-5v-2h3v-3h2V20z M64.13,20v-5h2v3h3v2H64.13z M64.13,24h5v2h-3
+			v3h-2V24z"/>
+	</g>
+	<g>
+		<path id="Rectangle-11" fill="#FFFFFF" d="M136.088,28.543l-3.25-3.25l-1.414,1.414l3.25,3.25L136.088,28.543z"/>
+		<path id="Oval-1" fill="none" stroke="#FFFFFF" stroke-width="1.5" d="M127.631,27c3.037,0,5.5-2.462,5.5-5.5s-2.463-5.5-5.5-5.5
+			c-3.039,0-5.5,2.462-5.5,5.5S124.592,27,127.631,27z"/>
+		<path fill="#FFFFFF" d="M125.131,21h5v1h-5V21z"/>
+	</g>
+	<g>
+		<path fill="#FFFFFF" d="M103.087,28.543l-1.414,1.414l-3.25-3.25l1.414-1.414L103.087,28.543z"/>
+		<path fill="none" stroke="#FFFFFF" stroke-width="1.5" d="M94.63,27c3.038,0,5.5-2.462,5.5-5.5s-2.462-5.5-5.5-5.5
+			s-5.5,2.462-5.5,5.5S91.592,27,94.63,27z"/>
+		<path fill="#FFFFFF" d="M92.13,21h5v1h-5V21z"/>
+		<path fill="#FFFFFF" d="M95.173,19.008l-0.085,5l-1-0.017l0.085-5L95.173,19.008z"/>
+	</g>
+</g>
+</svg>
