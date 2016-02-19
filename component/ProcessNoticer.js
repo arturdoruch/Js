@@ -43,14 +43,14 @@ define([
         /**
          * Adds process notice.
          *
-         * @param {string} message             The process notice message
-         * @param {bool}  [showLoader = false] Shows image loader
+         * @param {string|null} message              The process notice message
+         * @param {bool}        [showLoader = false] Shows image loader
          *
          * @return {Notice|null} The notice instance or null if notice with given message already exists.
          */
         this.add = function (message, showLoader) {
-            if (!message) {
-                throw new Error('This error was throw during call method "ProcessNoticer.add". Missing "name" argument.');
+            if (!message && !showLoader) {
+                throw new Error('Must be set at least one of arguments: "message" or "showLoader".');
             }
 
             /*if (isNoticeExist(message)) {
@@ -88,28 +88,32 @@ define([
          * Displays added notices.
          */
         this.display = function () {
+            var hasNotices = notices.length > 0,
+                showLoader = false;
+
             elements.container.empty();
 
-            if (notices.length > 0) {
-                var showLoader = false;
+            if (hasNotices) {
+                var notice;
 
                 for (var i in notices) {
-                    elements.item.$el()
-                        .clone()
-                        .html( notices[i].message )
-                        .appendTo( elements.container.$el() );
+                    notice = notices[i];
 
-                    if (notices[i].loader === true) {
+                    if (notice.message) {
+                        elements.item.$el()
+                            .clone()
+                            .html( notice.message )
+                            .appendTo( elements.container.$el() );
+                    }
+
+                    if (notice.loader === true) {
                         showLoader = true;
                     }
                 }
-
-                toggleElement('loader', showLoader);
-                toggleElement('container', true);
-            } else {
-                toggleElement('loader', false);
-                toggleElement('container', false);
             }
+
+            toggleElement('loader', showLoader);
+            toggleElement('container', hasNotices);
         };
 
         var isNoticeExist = function (message) {

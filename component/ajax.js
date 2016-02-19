@@ -9,7 +9,7 @@ define(['../helper/locationHelper'], function(locationHelper) {
      * @param {bool}   [noticeShowLoader]
      */
     function send(options, noticeMessage, noticeShowLoader) {
-        if (_processNoticer && noticeMessage) {
+        if (_processNoticer && (noticeMessage || noticeShowLoader)) {
             var notice = _processNoticer.add(noticeMessage, noticeShowLoader);
             _processNoticer.display();
         }
