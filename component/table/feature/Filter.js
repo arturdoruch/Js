@@ -63,7 +63,6 @@ define([
             });
 
             localStorage.set(getParamsKey(), params);
-
             em.dispatch('table.updateTable', [queryParams, url]);
         }
 
@@ -85,10 +84,6 @@ define([
             filter();
         }
 
-        function getParamsKey() {
-            return 'filterTable' + locationHelper.getCurrentPath(true);
-        }
-
         /**
          * Injects parameters from localStorage into filter form elements.
          */
@@ -107,6 +102,10 @@ define([
                     elem.value = params[elem.name];
                 }
             }
+        }
+
+        function getParamsKey() {
+            return 'filterTable' + $form.attr('name') + locationHelper.getCurrentPath().replace(/[^\w]/, '');
         }
 
         this.filter = filter;

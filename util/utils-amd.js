@@ -3,12 +3,12 @@
  */
 
 define([
-    'browserUtils',
-    'dateUtils',
-    'htmlUtils',
-    'objectUtils',
-    'screenUtils',
-    'stringUtils'
+    './browserUtils',
+    './dateUtils',
+    './htmlUtils',
+    './objectUtils',
+    './screenUtils',
+    './stringUtils'
 ], function(browserUtils, dateUtils, htmlUtils, objectUtils, screenUtils, stringUtils) {
 
     return {

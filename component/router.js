@@ -27,12 +27,13 @@ define([
         /**
          * Sets application base URL. Calls init handler for current route (path).
          *
-         * @param {string} [basePath] The root URL path of the application. The protocol
-         * and host name parts are not necessary. For example if the base url is
-         * "http://domain.com/project/name" then basePath will be "/project/name".
+         * @param {string} [baseUrl] The root URL of the application. The protocol is not necessary.
+         *                           E.g "http://domain.com/project/name" or "domain.com/project/name"
+         *                           takes the same effect.
+         * @param {string} [pathPrefix]
          */
-        init: function (basePath) {
-            locationHelper.init(basePath);
+        init: function (baseUrl, pathPrefix) {
+            locationHelper.init(baseUrl, pathPrefix);
 
             var path = locationHelper.getCurrentPath(),
                 route = findRoute(path);
@@ -93,8 +94,10 @@ define([
      * @returns {null|Route}
      */
     function findRoute(path) {
+        var pathPrefix = locationHelper.getPathPrefix();
+
         for (var i in routes) {
-            if (new RegExp('^' + routes[i].pathRegexp + '$', 'i').test(path)) {
+            if (new RegExp('^' + pathPrefix + routes[i].pathRegexp + '$', 'i').test(path)) {
                 return routes[i];
             }
         }

@@ -1,22 +1,32 @@
-/**
- * Created by Artur on 2016-02-15.
- */
+
 define(function() {
 
     var _baseUrl = (location.protocol + '//' + location.hostname).replace(/\/$/, ''),
+        _pathPrefix = '',
         isInitialized = false;
-        //pathRegexp = new RegExp('^(' + baseUrl + ')?(.*)$', 'i');
+    //pathRegexp = new RegExp('^(' + baseUrl + ')?(.*)$', 'i');
 
     return {
         /**
-         * @param baseUrl
+         * @param {string} baseUrl
+         * @param {string} [pathPrefix]
          */
-        init: function (baseUrl) {
-            if (isInitialized === false && baseUrl) {
-                _baseUrl += baseUrl.replace(_baseUrl, '');
+        init: function (baseUrl, pathPrefix) {
+            if (isInitialized === false) {
+                if (baseUrl) {
+                    _baseUrl = /^https?:\/\//.test(baseUrl) ? baseUrl : location.protocol + '//' + baseUrl;
+                }
+                _pathPrefix = pathPrefix || '';
             }
 
             isInitialized = true;
+        },
+
+        /**
+         * @returns {string}
+         */
+        getPathPrefix: function () {
+            return _pathPrefix;
         },
 
         /**
@@ -41,6 +51,15 @@ define(function() {
         },
 
         /**
+         * Checks if given path is equal to current url path
+         * @param {string} path
+         * @returns {boolean}
+         */
+        isCurrentPath: function (path) {
+            return this.getCurrentPath() === this.getPath(path);
+        },
+
+        /**
          * Gets path for given url.
          * @param {string} url
          * @returns {string}
@@ -50,6 +69,8 @@ define(function() {
 
             if (path.indexOf(_baseUrl) === 0) {
                 path = path.substr(_baseUrl.length);
+            } else if (path.indexOf(_pathPrefix) !== 0) {
+                path = _pathPrefix + path;
             }
 
             return path === '' ? '/' : path;
@@ -65,5 +86,4 @@ define(function() {
             return _baseUrl + this.getPath(path);
         }
     };
-
 });

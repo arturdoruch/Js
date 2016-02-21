@@ -80,12 +80,12 @@
                         event.args = event.listenerArgs;
                         event.args.unshift(this);
                         event.args.push(e);
-
-                        if (preventDefault !== false) {
-                            e.preventDefault();
-                        }
                     } else {
                         event.args[event.args.length - 1] = e;
+                    }
+
+                    if (preventDefault !== false) {
+                        e.preventDefault();
                     }
 
                     listener.apply(event.listenerContext, event.args);

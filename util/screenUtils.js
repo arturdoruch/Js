@@ -2,7 +2,7 @@
  * Created by Artur on 2014-12-30.
  */
 
-define(['browserUtils'], function(BrowserUtils) {
+define(['./browserUtils'], function(BrowserUtils) {
 
     return {
         /**

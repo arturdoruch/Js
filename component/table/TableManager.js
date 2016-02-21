@@ -5,8 +5,9 @@
 define([
     '../eventManager',
     '../ajax',
-    '../router'
-], function(em, Ajax, router) {
+    '../router',
+    '../../helper/locationHelper'
+], function(em, ajax, router, locationHelper) {
 
     var $table,
         _pagination,
@@ -38,6 +39,7 @@ define([
         this.setFilter(filter);
 
         subscriptions();
+        initFunctionality();
 
         if (_filter) {
             _filter.filter();
@@ -46,7 +48,7 @@ define([
         }
     };
 
-    function reInitFunctionality() {
+    function initFunctionality() {
         if (_pagination) {
             _pagination.init(loadTable);
         }
@@ -77,7 +79,7 @@ define([
     }
 
     function getTableList(url) {
-        return Ajax.send({
+        return ajax.send({
             url: url,
             data: queryParams
         }, _updateTableConfig.processMessage, _updateTableConfig.showLoader)
@@ -85,7 +87,7 @@ define([
 
     function updateTable(html, url) {
         $table.html(html).show();
-        reInitFunctionality();
+        initFunctionality();
         updateTableCallback.call(null, url);
     }
 

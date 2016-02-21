@@ -2,7 +2,12 @@
  * Created by Artur on 2015-04-16.
  */
 
-define(['../helper/localStorage', '../util/objectUtils'], function(localStorage, ObjectUtils) {
+define([
+    '../helper/localStorage',
+    '../helper/locationHelper',
+    '../util/objectUtils',
+    '../extension/jqueryExtensions'
+], function(localStorage, locationHelper, objectUtils) {
     /**
      *
      * @param {jQuery|DomElement} form
@@ -11,7 +16,7 @@ define(['../helper/localStorage', '../util/objectUtils'], function(localStorage,
     var Form = function(form) {
         this.$form = $(form);
         this.formName = this.$form.attr('name');
-        this.key = this.formName + Math.random().toString(36).substr(2, 9);
+        this.key = this.formName + locationHelper.getCurrentPath();
     };
 
     Form.prototype = {
@@ -33,7 +38,7 @@ define(['../helper/localStorage', '../util/objectUtils'], function(localStorage,
             var data = this.$form.serializeObject();
 
             // Remove Symfony framework form token.
-            if (data[this.formName]['_token']) {
+            if (data[this.formName] && data[this.formName]['_token']) {
                 delete data[this.formName]['_token'];
             }
 
@@ -130,13 +135,13 @@ define(['../helper/localStorage', '../util/objectUtils'], function(localStorage,
             isArray,
             element;
 
-        if (ObjectUtils.is('Object', value)) {
+        if (objectUtils.is('Object', value)) {
             for (var nestedName in value) {
                 name = preName + '[' + nestedName + ']';
                 loadFieldData(form, name, value[nestedName]);
             }
         } else {
-            isArray = ObjectUtils.is('Array', value);
+            isArray = objectUtils.is('Array', value);
             name = isArray === true ? preName + '[]' : preName;
             element = form[name];
 
