@@ -21,8 +21,8 @@ define([
             em.on('click', $sortingItems, sorting);
         };
 
-        function sorting(elem) {
-            var data = elem.dataset,
+        function sorting(event) {
+            var data = event.target.dataset,
                 queryParams = {};
 
             if (data.orderDir && data.orderField) {

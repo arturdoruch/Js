@@ -18,10 +18,9 @@
      */
     function _Event(name, element, listener, listenerArgs, listenerContext) {
         this.name = name;
-        this.element = !(element instanceof jQuery) ? $(element) : element;
+        this.element = $(element);
         this.listener = listener;
         this.listenerArgs = listenerArgs || [];
-        this.args = null;
         this.listenerContext = listenerContext || window;
     }
 
@@ -70,25 +69,17 @@
          */
         on: function (events, element, listener, listenerArgs, listenerContext, preventDefault) {
             if (typeof listener !== 'function') {
-                throw 'The event listener must be a function.';
+                throw new Error ('The event listener must be a function.');
             }
 
             var event = new _Event(events, element, listener, listenerArgs, listenerContext),
                 id = '#' + Object.keys(_events).length,
                 _listener = function (e) {
-                    if (event.args === null) {
-                        event.args = event.listenerArgs;
-                        event.args.unshift(this);
-                        event.args.push(e);
-                    } else {
-                        event.args[event.args.length - 1] = e;
-                    }
-
                     if (preventDefault !== false) {
                         e.preventDefault();
                     }
 
-                    listener.apply(event.listenerContext, event.args);
+                    listener.apply(event.listenerContext, [e].concat(event.listenerArgs));
                 };
 
             if (event.element.length === 0) {

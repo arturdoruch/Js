@@ -28,12 +28,12 @@ define(['../../eventManager'], function(em) {
             setEvents();
         };
 
-        var setEvents = function() {
+        var setEvents = function () {
             em.on('click', getPagerAnchors(), paginate);
         };
 
-        var paginate = function(el) {
-            var url = el.getAttribute('href');
+        var paginate = function (event) {
+            var url = event.target.getAttribute('href');
 
             _callbackArgs.unshift(url);
             _callback.apply(null, _callbackArgs);
