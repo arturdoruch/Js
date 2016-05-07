@@ -1,54 +1,69 @@
 /**
- * Created by Artur on 2014-11-19.
+ * Browser scroll bars helpers
+ *
+ * @author Artur Doruch <arturdoruch@interia.pl>
  */
-
 define(['../util/browserUtils'], function(BrowserUtils) {
 
-    var bodyMarginLeftTmp = 0,
-        loadState = true,
-        correctPositionState = false;
+    var tempBodyMarginLeft = 0;
+
+    /**
+     * Gets scroll bar width
+     * @return {int}
+     */
+    function getWidth() {
+        return BrowserUtils.getScrollBarWidth();
+    }
 
     /**
      * Loads and unloads browser scroll bars.
      *
-     * @param state string
-     * @param moveBody bool
-     * @private
+     * @param {string} state One of: "load", "unload"
+     * @param {bool}   [freezeBody]
      */
-    function _load(state, moveBody) {
+    function _load(state, freezeBody) {
         if (document.documentElement) {
-            document.documentElement.style.overflow = (state == 'load') ? 'auto' : 'hidden'; // firefox, chrome
+            document.documentElement.style.overflow = state === 'load' ? 'auto' : 'hidden'; // Firefox, Chrome
         } else {
-            document.body.scroll = (state == 'load') ? 'yes' : 'no'; // old ie only
+            document.body.scroll = state === 'load' ? 'yes' : 'no'; // old IE
         }
 
-        loadState = (state == 'load');
-
-        if (moveBody == true) {
-            correctBodyPosition();
-        }
+        _setBodyMargin(state === 'load', freezeBody);
     }
 
-    function correctBodyPosition() {
-        if (loadState == false && correctPositionState == false) {
-            bodyMarginLeftTmp = document.body.style.marginLeft.replace('px', '') || 0;
-            document.body.style.marginLeft = (bodyMarginLeftTmp - getWidth()) + 'px';
-            correctPositionState = true;
-        } else if (loadState == true) {
-            document.body.style.marginLeft = (bodyMarginLeftTmp == 0) ? '' : bodyMarginLeftTmp + 'px';
-            correctPositionState = false;
+    /**
+     * @param {bool} isLoaded If scroll bar is loaded
+     * @param {bool} freezeBody
+     */
+    function _setBodyMargin(isLoaded, freezeBody) {
+        if (isLoaded === false && freezeBody === true) {
+            tempBodyMarginLeft = document.body.style.marginLeft.replace('px', '') || 0;
+            document.body.style.marginLeft = (tempBodyMarginLeft - getWidth()) + 'px';
+        } else if (isLoaded === true) {
+            document.body.style.marginLeft = tempBodyMarginLeft === 0 ? '' : tempBodyMarginLeft + 'px';
         }
     }
 
     return {
-        load: function(moveBody) {
-            _load('load', moveBody);
+        /**
+         * Unload browser vertical scroll bar.
+         * @param {bool} [freezeBody = false] If true prevent to move body in horizontal position, while scroll bar is removed.
+         */
+        unload: function(freezeBody) {
+            _load('unload', freezeBody);
         },
-        unload: function(moveBody) {
-            _load('unload', moveBody);
+
+        /**
+         * Load previously unloaded browser vertical scroll bar.
+         */
+        load: function() {
+            _load('load');
         },
-        getWidth: function () {
-            return BrowserUtils.getScrollBarWidth();
-        }
+
+        /**
+         * Gets scroll bar width.
+         * @return {int}
+         */
+        getWidth: getWidth
     }
 });
