@@ -1,7 +1,7 @@
 
 define(function() {
 
-    var _baseUrl = (location.protocol + '//' + location.hostname).replace(/\/$/, ''),
+    var _baseUrl = (location.protocol + '//' + location.host).replace(/\/$/, ''),
         _pathPrefix = '',
         isInitialized = false;
     //pathRegexp = new RegExp('^(' + baseUrl + ')?(.*)$', 'i');

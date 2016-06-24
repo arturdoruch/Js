@@ -1,6 +1,10 @@
 /*
  * Thumbnails
  */
+.pswp__zoom-wrap {
+    transition: none;
+}
+
 .pswp__scroll-wrap {
     /*transition: .3s height;*/
 }
