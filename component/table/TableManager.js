@@ -13,8 +13,9 @@ define([
         _pagination,
         _sorting,
         _filter,
-        updateTableCallback = function() {},
-        _updateTableConfig = {
+        // Update table listeners.
+        updateListeners = [],
+        updateConfig = {
             processMessage: 'Getting table items',
             showLoader: true
         },
@@ -32,7 +33,7 @@ define([
      */
     var TableManager = function(table, config, sorting, pagination, filter) {
         $table = $(table);
-        $.extend(_updateTableConfig, config);
+        $.extend(updateConfig, config);
 
         this.setSorting(sorting);
         this.setPagination(pagination);
@@ -82,13 +83,16 @@ define([
         return ajax.send({
             url: url,
             data: queryParams
-        }, _updateTableConfig.processMessage, _updateTableConfig.showLoader)
+        }, updateConfig.processMessage, updateConfig.showLoader)
     }
 
     function updateTable(html, url) {
         $table.html(html).show();
         initFunctionality();
-        updateTableCallback.call(null, url);
+        // Dispatch update table event
+        for (var l in updateListeners) {
+            updateListeners[l].call(null, url);
+        }
     }
 
     TableManager.prototype = {
@@ -151,12 +155,26 @@ define([
         },
 
         /**
+         * @deprecated Use addUpdateTableListener() method instead.
          * Registers callback function that will be called, when table will be updated.
          *
          * @param {function} callback
          */
         setUpdateTabelCallback: function(callback) {
-            updateTableCallback = callback;
+            this.addUpdateTableListener(callback)
+        },
+
+        /**
+         * Registers listener, which will be called after update table list.
+         *
+         * @param {function} listener The listener function. Function received one argument: url.
+         */
+        addUpdateTableListener: function (listener) {
+            if (typeof listener !== 'function') {
+                throw new Error('The given value is not a function.');
+            }
+
+            updateListeners.push(listener);
         }
     };
 
