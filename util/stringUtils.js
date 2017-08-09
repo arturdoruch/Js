@@ -3,7 +3,6 @@
  */
 
 define({
-
     /**
      * Repeats string number of times.
      *
@@ -57,6 +56,20 @@ define({
         });
 
         return string.charAt(0).toUpperCase() + string.slice(1);
-    }
+    },
 
+    /**
+     * Copies given string into system clipboard.
+     *
+     * @param {string} string
+     */
+    copyToClipboard: function(string) {
+        var input = document.createElement('input');
+
+        input.setAttribute('value', string);
+        document.body.appendChild(input);
+        input.select();
+        document.execCommand('copy');
+        document.body.removeChild(input);
+    }
 });
