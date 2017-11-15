@@ -3,9 +3,8 @@
  */
 
 define(['../../eventManager'], function(em) {
-
     /**
-     * @param {string} containerSelector Pagination container element css selector.
+     * @param {string} containerSelector Pagination container element or elements css selector.
      * @constructor
      */
     return function(containerSelector) {
@@ -13,7 +12,7 @@ define(['../../eventManager'], function(em) {
             throw new Error('Missing "containerSelector" argument.');
         }
 
-        var _containerSelector = containerSelector,
+        var containerSelectors = containerSelector,
             _callback,
             _callbackArgs;
 
@@ -24,25 +23,19 @@ define(['../../eventManager'], function(em) {
         this.init = function (callback, callbackArgs) {
             _callback = callback;
             _callbackArgs = callbackArgs || [];
-
-            setEvents();
-        };
-
-        var setEvents = function () {
+            // Add pager events
             em.on('click', getPagerAnchors(), paginate);
         };
 
-        var paginate = function (event) {
+        function paginate(event) {
             var url = event.target.getAttribute('href');
 
             _callbackArgs.unshift(url);
             _callback.apply(null, _callbackArgs);
-        };
+        }
 
-        var getPagerAnchors = function () {
-            var container = document.querySelector(_containerSelector);
-
-            return container ? container.getElementsByTagName('a') : null;
+        function getPagerAnchors() {
+            return document.querySelectorAll(containerSelectors + ' a');
         }
     };
 });
