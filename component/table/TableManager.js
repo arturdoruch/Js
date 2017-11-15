@@ -16,7 +16,7 @@ define([
         // Update table listeners.
         updateListeners = [],
         updateConfig = {
-            processMessage: 'Getting table items',
+            processMessage: 'Getting items',
             showLoader: true
         },
         queryParams = {},
@@ -39,7 +39,7 @@ define([
         this.setPagination(pagination);
         this.setFilter(filter);
 
-        subscriptions();
+        setListeners();
         initFunctionality();
 
         if (_filter) {
@@ -58,15 +58,17 @@ define([
         }
     }
 
-    function subscriptions() {
-        em.addListener('table.updateTable', function(event, params, url) {
-            addQueryParams(params);
+    function setListeners() {
+        em.addListener('ad_table.filter', function(event, params, url) {
+            queryParams = params;
             loadTable(url);
         });
-    }
 
-    function addQueryParams(params) {
-        $.extend(queryParams, params);
+        em.addListener('ad_table.sort', function(event, orderField, orderDir, url) {
+            queryParams['orderField'] = orderField;
+            queryParams['orderDir'] = orderDir;
+            loadTable(url);
+        });
     }
 
     function loadTable(url, pushState) {
@@ -148,10 +150,12 @@ define([
         },
 
         /**
+         * @todo It's rather useless.
+         *
          * @param {object} params
          */
         addQueryParams: function(params) {
-            addQueryParams(params);
+            $.extend(queryParams, params);
         },
 
         /**

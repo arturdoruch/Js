@@ -7,7 +7,6 @@ define([
     '../../../helper/locationHelper',
     '../../../helper/localStorage'
 ], function(em, locationHelper, localStorage) {
-
     /**
      * @param {HTMLElement|jQuery} form           The filter form element
      * @param {HTMLElement|jQuery} [filterButton]
@@ -15,6 +14,7 @@ define([
      * @param {[]}                 [noResetElements = [ filter_table[limit], filter_table[_token] ]]
      *                             The names of form elements which values should not be reset,
      *                             when $resetButton is clicked.
+     * @todo Set default field values for pass to field when reset button is clicked.
      */
     return function (form, filterButton, resetButton, noResetElements) {
         if (typeof form === 'undefined') {
@@ -52,31 +52,32 @@ define([
                 params = {},
                 url = locationHelper.getCurrentUrl().replace(/\/(\d+)$/, '');
 
-            formData.map(function(i) {
-                name = i.name.replace(/[^\[]*\[(.+)\].*/, '$1');
-                value = i.value.trim();
+            formData.map(function(element) {
+                // todo Leave original form element name.
+                name = element.name.replace(/[^\[]*\[(.+)\].*/, '$1');
+                value = element.value.trim();
 
                 queryParams[name] = value;
                 if (name.indexOf('_', 0) == -1) {
-                    params[i.name] = value;
+                    params[element.name] = value;
                 }
             });
 
             localStorage.set(getParamsKey(), params);
-            em.dispatch('table.updateTable', [queryParams, url]);
+            em.dispatch('ad_table.filter', [queryParams, url]);
         }
 
         function reset() {
             var formElements = $form[0].elements,
-                elem;
+                element;
 
-            for (var i=0; i < formElements.length; i++) {
-                elem = formElements[i];
+            for (var i = 0; i < formElements.length; i++) {
+                element = formElements[i];
 
-                if (_noResetElements.indexOf(elem.name) === -1) {
-                    elem.value = '';
-                    if (elem.nodeName == 'SELECT') {
-                        elem.selectedIndex = 0;
+                if (_noResetElements.indexOf(element.name) === -1) {
+                    element.value = '';
+                    if (element.nodeName == 'SELECT') {
+                        element.selectedIndex = 0;
                     }
                 }
             }
@@ -90,16 +91,22 @@ define([
         function loadParameters() {
             var params = localStorage.get(getParamsKey()),
                 formElements = $form[0].elements,
-                elem;
+                element;
 
             if (!params) {
                 return;
             }
 
             for (var i = 0; i < formElements.length; i++) {
-                elem = formElements[i];
-                if (params[elem.name]) {
-                    elem.value = params[elem.name];
+                element = formElements[i];
+
+                if (params[element.name]) {
+                    // todo Handel radio and select-multiple types.
+                    if (element.type === 'checkbox') {
+                        element.checked = true;
+                    } else {
+                        element.value = params[element.name];
+                    }
                 }
             }
         }
@@ -113,5 +120,4 @@ define([
         loadParameters();
         setEvents();
     };
-
 });
