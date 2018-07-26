@@ -22,8 +22,8 @@ define([
         }
 
         var $form = $(form),
-            _filterButton = $('#filter_table_filter') || filterButton,
-            _resetButton = $('#filter_table_reset') || resetButton,
+            _filterButton = filterButton.length > 0 ? filterButton : $('#filter_table_filter'),
+            _resetButton = resetButton.length > 0 ? resetButton : $('#filter_table_reset'),
             _noResetElements = $.extend(
                 ['filter_table[limit]', 'filter_table[_token]'],
                 noResetElements
