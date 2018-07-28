@@ -9,8 +9,8 @@ define([
 ], function(em, locationHelper, localStorage) {
     /**
      * @param {HTMLElement|jQuery} form           The filter form element
-     * @param {HTMLElement|jQuery} [filterButton]
-     * @param {HTMLElement|jQuery} [resetButton]
+     * @param {HTMLElement|jQuery|string} [filterButton] Filter button CSS selector, HTML, or jQuery element.
+     * @param {HTMLElement|jQuery|string} [resetButton] Reset button CSS selector, HTML, or jQuery element.
      * @param {[]}                 [noResetElements = [ filter_table[limit], filter_table[_token] ]]
      *                             The names of form elements which values should not be reset,
      *                             when $resetButton is clicked.
@@ -22,8 +22,8 @@ define([
         }
 
         var $form = $(form),
-            _filterButton = filterButton.length > 0 ? filterButton : $('#filter_table_filter'),
-            _resetButton = resetButton.length > 0 ? resetButton : $('#filter_table_reset'),
+            _filterButton = $(filterButton || '#filter_table_filter'),
+            _resetButton = $(resetButton || '#filter_table_reset'),
             _noResetElements = $.extend(
                 ['filter_table[limit]', 'filter_table[_token]'],
                 noResetElements
