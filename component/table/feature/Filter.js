@@ -50,7 +50,8 @@ define([
                 value,
                 queryParams = {},
                 params = {},
-                url = locationHelper.getCurrentUrl().replace(/\/(\d+)$/, '');
+                // Set url "page" query parameter to 1.
+                url = locationHelper.getCurrentUrl().replace(/\/\d+$/, '').replace(/([\?&]page=)\d+/i, '$11');
 
             formData.map(function(element) {
                 // todo Leave original form element name.
