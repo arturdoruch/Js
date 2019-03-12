@@ -1,13 +1,11 @@
 /**
- * Created by Artur on 2014-11-15.
+ * Manages HTML table.
  */
-
 define([
     '../eventManager',
     '../ajax',
-    '../router',
-    '../../helper/locationHelper'
-], function(em, ajax, router, locationHelper) {
+    '../router'
+], function(em, ajax, router) {
 
     var $table,
         _pagination,
@@ -23,13 +21,13 @@ define([
         _events = [];
 
     /**
-     * @param {object} table Table container
+     * @param {object} table Table container element
      * @param {object} config Update table config
      * @param {string} [config.processMessage = 'Getting table items'] Message showing while table is updated.
      * @param {bool}   [config.showLoader = true] Whether the image loader should be displayed while table is updated.
-     * @param filter
-     * @param pagination
-     * @param sorting
+     * @param {Sorting} sorting Searchable
+     * @param {Pagination} pagination Paginable
+     * @param {Filter} filter Searchable
      */
     var TableManager = function(table, config, sorting, pagination, filter) {
         $table = $(table);
@@ -59,9 +57,9 @@ define([
     }
 
     function setListeners() {
-        em.addListener('ad_table.filter', function(event, params, url) {
-            queryParams = params;
-            loadTable(url);
+        em.addListener('ad_table.filter', function(event, _queryParams, url, addLocationState) {
+            queryParams = _queryParams;
+            loadTable(url, addLocationState);
         });
 
         em.addListener('ad_table.sort', function(event, orderField, orderDir, url) {
@@ -71,10 +69,10 @@ define([
         });
     }
 
-    function loadTable(url, pushState) {
+    function loadTable(url, addLocationState) {
         getTableList(url)
             .success(function(html) {
-                if (pushState !== false) {
+                if (addLocationState !== false) {
                     router.setLocation(url, html);
                 }
                 updateTable(html, url);
@@ -129,9 +127,9 @@ define([
          * Loads table content. Makes ajax request and update table with returned data.
          *
          * @param {string} url Url to table content resource, is uses for ajax request.
-         * @param {bool}   [pushState]
+         * @param {boolean} [addLocationState = true] Whether the url and response data should be added to the location history.
          */
-        loadTable: function(url, pushState) {
+        loadTable: function(url, addLocationState) {
             loadTable(url);
         },
 
