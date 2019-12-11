@@ -1,11 +1,14 @@
 
 (function ($, window, undefined) {
-
     /**
      * Serializes form object
      */
     (function () {
-        $.fn.serializeObject = function() {
+        /**
+         * @param {bool} [skipEmptyValues = false]
+         * @return {{}}
+         */
+        $.fn.serializeObject = function(skipEmptyValues) {
 
             var self = this,
                 json = {},
@@ -20,6 +23,7 @@
 
             this.build = function(base, key, value) {
                 base[key] = value;
+
                 return base;
             };
 
@@ -27,12 +31,13 @@
                 if (pushCounters[key] === undefined) {
                     pushCounters[key] = 0;
                 }
+
                 return pushCounters[key]++;
             };
 
             $.each($(this).serializeArray(), function() {
-                // skip invalid keys
-                if (!patterns.validate.test(this.name)) {
+                // Skip elements with invalid name or empty value.
+                if (!patterns.validate.test(this.name) || skipEmptyValues === true && !this.value) {
                     return;
                 }
 
@@ -42,19 +47,14 @@
                     reverseKey = this.name;
 
                 while ((k = keys.pop()) !== undefined) {
-                    // adjust reverse_key
+                    // Adjust reverse key
                     reverseKey = reverseKey.replace(new RegExp("\\[" + k + "\\]$"), '');
 
-                    // push
                     if (k.match(patterns.push)) {
                         merge = self.build([], self.pushCounter(reverseKey), merge);
-                    }
-                    // fixed
-                    else if (k.match(patterns.fixed)) {
+                    } else if (k.match(patterns.fixed)) {
                         merge = self.build([], k, merge);
-                    }
-                    // named
-                    else if (k.match(patterns.named)) {
+                    } else if (k.match(patterns.named)) {
                         merge = self.build({}, k, merge);
                     }
                 }
@@ -87,22 +87,5 @@
             return xhr;
         };
     })();
-
-    /*
-     * Adds event observer subscriber
-     */
-    /*(function () {
-     var o = $({});
-
-     $.each({
-     trigger: 'dispatch',
-     on: 'addListener',
-     off: 'removeListener'
-     }, function (key, val) {
-     jQuery[val] = function() {
-     o[key].apply(o, arguments);
-     }
-     });
-     })();*/
 
 })(jQuery, window);
