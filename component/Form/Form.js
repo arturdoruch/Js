@@ -119,7 +119,8 @@ define([
          * @return {{}}
          */
         getData: function(skipEmptyValues) {
-            var element, name, value,
+            var elements = this.$form.serializeArray(),
+                element, name, value,
                 data = {},
                 pushCounters = {},
                 patterns = {
@@ -144,8 +145,8 @@ define([
                 return pushCounters[key]++;
             };
 
-            for (var i = 0; i < this._elements.length; i++) {
-                element = this._elements[i];
+            for (var i = 0; i < elements.length; i++) {
+                element = elements[i];
                 name = element.name;
                 value = element.value;
 
