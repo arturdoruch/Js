@@ -62,6 +62,51 @@ define({
         })(navigator.userAgent||navigator.vendor||window.opera);
 
         return check;
-    }
+    },
 
+    /**
+     * Attaches event to the element to open HTML or JSON content in a new browser tab.
+     * The trigger element must have defined attribute "data-*" with value as id attribute of the element
+     * with HTML or JSON content to open.
+     *
+     * Code example:
+     *   <button data-open-in-browser="html-content-1">Open</button>
+     *   <div id="html-content-1">
+     *       &lt;ul&gt;
+     *           &lt;li&gt;Item1&lt;&#47;li&gt;
+     *           &lt;li&gt;Item2&lt;&#47;li&gt;
+     *       &lt;&#47;ul&gt;
+     *   </div>
+     *
+     * @param {string} [triggerDataAttribute="open-in-browser"]
+     */
+    attachOpenContentEvent: function(triggerDataAttribute) {
+        var dataAttribute = triggerDataAttribute || 'open-in-browser',
+            dataSetKey = dataAttribute.replace(/-(\w)/g, function (matches) {
+                return matches[1].toUpperCase();
+            });
+
+        var triggers = document.querySelectorAll('*[data-' + dataAttribute + ']'),
+            trigger,
+            handler;
+
+        for (var i = 0; i < triggers.length; i++) {
+            trigger = triggers[i];
+            handler = function () {
+                var element = document.querySelector('#' + this.dataset[dataSetKey]);
+
+                if (!element) {
+                    return;
+                }
+
+                var div = document.createElement('div');
+                div.innerHTML = element.innerHTML;
+
+                window.open().document.body.innerHTML = div.textContent;
+            };
+
+            //trigger.removeEventListener('click', handler);
+            trigger.onclick = handler;
+        }
+    }
 });
