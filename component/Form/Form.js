@@ -64,7 +64,7 @@ define([
          * @return Class
          */
         addElementListener: function (event, name, listener, options) {
-            em.on(event, this.getElement(name) || this._form.querySelector(name), listener,
+            em.on(event, this.getElement(name) || this.$form.find(name), listener,
                 options.arguments || [],
                 options.context || window,
                 options.preventDefault || true
